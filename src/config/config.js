@@ -2,25 +2,27 @@ require('dotenv').config();
 const { DB_HOST, DB_USERNAME, DB_PASSWORD } = process.env;
 
 module.exports = {
-  "development": {
+  development: {
     username: DB_USERNAME,
     password: DB_PASSWORD,
-    database: "sequelize_database_dev",
+    database: 'sequelize_database_dev',
     host: DB_HOST,
-    dialect: "postgres",
+    dialect: 'postgres',
   },
-  "test": {
+  test: {
     username: DB_USERNAME,
     password: DB_PASSWORD,
-    database: "sequelize_database_test",
+    database: 'sequelize_database_test',
     host: DB_HOST,
-    dialect: "postgres",
+    dialect: 'postgres',
   },
-  "production": {
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
-    database: "sequelize_database_prod",
-    host: DB_HOST,
-    dialect: "postgres",
-  }
+  production: {
+    //  username: DB_USERNAME,
+    //  password: DB_PASSWORD,
+    //  database: 'sequelize_database_prod',
+    //  host: DB_HOST,
+    dialect: 'postgres',
+    operatorsAliases: 0,
+    use_env_variable: 'DATABASE_URL',
+  },
 };
