@@ -17,12 +17,14 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    //  username: DB_USERNAME,
-    //  password: DB_PASSWORD,
-    //  database: 'sequelize_database_prod',
-    //  host: DB_HOST,
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     operatorsAliases: 0,
-    use_env_variable: 'DATABASE_URL',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
 };
