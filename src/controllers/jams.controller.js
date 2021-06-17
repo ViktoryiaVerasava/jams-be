@@ -1,8 +1,9 @@
 import { Op } from 'sequelize';
 import model from '../models';
 import formatError from '../utils/formatError.util';
+import { removeFromArray } from '../utils/removeFromArray.util';
 
-const { Jam, Song, User, JamUsers } = model;
+const { Jam, Song, User } = model;
 
 const create = async (req, res) => {
   try {
@@ -87,8 +88,17 @@ const findAllAvailableForCurrentUser = async (req, res) => {
       },
       attributes: ['id', 'isStarted'],
     });
-
-    res.send({ data: jams });
+    const fixedJams = jams.filter((j) => {
+      const allInstruments = j.song.instruments;
+      const occupiedInstruments =
+        j.participants?.map((p) => p.instrument) || [];
+      const availableInstruments = removeFromArray(
+        allInstruments,
+        occupiedInstruments
+      );
+      return availableInstruments.includes(userInstrument);
+    });
+    res.send({ data: fixedJams });
   } catch (e) {
     return res
       .status(500)

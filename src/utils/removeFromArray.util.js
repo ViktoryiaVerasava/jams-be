@@ -3,7 +3,7 @@
  * @param {array} sourceArr
  * @param {array} valuesValue
  */
-const removeFromArray = (sourceArr, valuesValue) => {
+export const removeFromArray = (sourceArr, valuesValue) => {
   valuesValue.forEach((el) => {
     const index = sourceArr.indexOf(el);
     if (index !== -1) {
