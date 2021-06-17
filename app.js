@@ -6,7 +6,10 @@ import cors from 'cors';
 const app = express();
 const port = process.env.PORT || 3001;
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'https://whispering-eyrie-19616.herokuapp.com',
+  ],
 };
 
 app.use(cors(corsOptions));
