@@ -80,15 +80,16 @@ const findAllAvailableForCurrentUser = async (req, res) => {
         [Op.or]: [
           { '$participants.id$': null },
           {
-            '$participants.id$': {
-              [Op.ne]: userId,
-            },
+            isStarted: false,
           },
         ],
       },
       attributes: ['id', 'isStarted'],
     });
-    const fixedJams = jams.filter((j) => {
+    const jamsWhereNotParticipant = jams.filter(
+      (j) => !j.participants.some((p) => p.id === userId)
+    );
+    const jamsWithAvailableInstrument = jamsWhereNotParticipant.filter((j) => {
       const allInstruments = j.song.instruments;
       const occupiedInstruments =
         j.participants?.map((p) => p.instrument) || [];
@@ -98,7 +99,7 @@ const findAllAvailableForCurrentUser = async (req, res) => {
       );
       return availableInstruments.includes(userInstrument);
     });
-    res.send({ data: fixedJams });
+    res.send({ data: jamsWithAvailableInstrument });
   } catch (e) {
     return res
       .status(500)

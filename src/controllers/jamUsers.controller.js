@@ -1,5 +1,6 @@
 import model from '../models';
 import formatError from '../utils/formatError.util';
+import { removeFromArray } from '../utils/removeFromArray.util';
 
 const { Jam, User, JamUsers, Song } = model;
 
@@ -40,7 +41,6 @@ const addUserToJam = async (req, res) => {
       });
       availableInstruments = jam.song.instruments;
     }
-    console.log(availableInstruments);
 
     const user = await User.findOne({ where: { id: userId } });
     if (availableInstruments.includes(user.instrument)) {
