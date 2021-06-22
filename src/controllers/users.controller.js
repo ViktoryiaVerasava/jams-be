@@ -15,7 +15,7 @@ const create = async (req, res) => {
     if (user) {
       return res
         .status(422)
-        .send({ message: 'User with that email or phone already exists' });
+        .send({ message: 'User with such an email or phone already exists' });
     }
     await User.create({
       firstName,
@@ -73,8 +73,7 @@ const signIn = async (req, res) => {
     var passwordIsValid = bcrypt.compareSync(password, user.password);
 
     if (!passwordIsValid) {
-      return res.status(401).send({
-        accessToken: null,
+      return res.status(403).send({
         message: 'Invalid Password!',
       });
     }

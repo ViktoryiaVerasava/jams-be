@@ -77,12 +77,7 @@ const findAllAvailableForCurrentUser = async (req, res) => {
         },
       ],
       where: {
-        [Op.or]: [
-          { '$participants.id$': null },
-          {
-            isStarted: false,
-          },
-        ],
+        isStarted: false,
       },
       attributes: ['id', 'isStarted'],
     });
