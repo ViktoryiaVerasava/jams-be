@@ -15,7 +15,7 @@ export default (app) => {
   };
 
   app.use(
-    unless(['/users/auth/signin', '/users/auth/signup', '/songs'], authJwt)
+    unless(['/users/auth/signin', '/users/auth/signup'], authJwt)
   );
 
   app.use('/users', usersRouter);

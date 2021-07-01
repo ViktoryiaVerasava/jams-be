@@ -81,12 +81,18 @@ const signIn = async (req, res) => {
     const token = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: 86400, // 24 hours
     });
-    return res.status(200).send({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      accessToken: token,
-    });
+    return res
+      .cookie('token', token, {
+        httpOnly: true,
+        secure: false,
+      })
+      .status(200)
+      .send({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        accessToken: token,
+      });
   } catch (e) {
     return res.status(500).send({ message: formatError(e) });
   }
